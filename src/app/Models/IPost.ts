@@ -1,6 +1,6 @@
 export interface IPost {
   id?: string;
-  categoryId: string;
+  categoryid: string;
   description: string;
   title: string;
 }

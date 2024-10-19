@@ -14,6 +14,14 @@ export class PostService {
       .get<{ [id: string]: IPost }>(
         'https://angular-rxjs-declarative-posts-default-rtdb.firebaseio.com/posts.json'
       )
-      .pipe(map((data) => console.log(data)));
+      .pipe(
+        map((postData) => {
+          let post: IPost[] = [];
+          for (let id in postData) {
+            post.push({ ...postData[id], id });
+          }
+          return post;
+        })
+      );
   }
 }

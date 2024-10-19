@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
+import { IPost } from 'src/app/Models/IPost';
 import { PostService } from 'src/app/Services/post.service';
 
 @Component({
@@ -6,10 +8,18 @@ import { PostService } from 'src/app/Services/post.service';
   templateUrl: './posts.component.html',
   styleUrls: ['./posts.component.css'],
 })
-export class PostsComponent implements OnInit {
+export class PostsComponent implements OnInit, OnDestroy {
+  postData: IPost[] = [];
+  postsSubscription!: Subscription;
   constructor(private postService: PostService) {}
 
   ngOnInit(): void {
-    this.postService.getPosts().subscribe((data) => console.log(data));
+    this.postsSubscription = this.postService.getPosts().subscribe((data) => {
+      this.postData = data;
+      console.log(data);
+    });
+  }
+  ngOnDestroy(): void {
+    this.postsSubscription && this.postsSubscription.unsubscribe();
   }
 }
