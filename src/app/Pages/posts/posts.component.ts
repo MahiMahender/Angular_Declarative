@@ -1,5 +1,6 @@
 import {
   ChangeDetectionStrategy,
+  ChangeDetectorRef,
   Component,
   OnDestroy,
   OnInit,
@@ -17,7 +18,10 @@ import { PostService } from 'src/app/Services/post.service';
 export class PostsComponent implements OnInit, OnDestroy {
   postData: IPost[] = [];
   postsSubscription!: Subscription;
-  constructor(private postService: PostService) {}
+  constructor(
+    private postService: PostService,
+    private ref: ChangeDetectorRef
+  ) {}
 
   ngOnInit(): void {
     /* this.postsSubscription = this.postService.getPosts().subscribe((data) => {
@@ -27,6 +31,7 @@ export class PostsComponent implements OnInit, OnDestroy {
       .getPostsWithCategories()
       .subscribe((data) => {
         this.postData = data;
+        this.ref.detectChanges();
       });
   }
   ngOnDestroy(): void {
