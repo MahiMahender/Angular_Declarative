@@ -6,9 +6,10 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './Components/header/header.component';
 import { PostsComponent } from './Pages/posts/posts.component';
+import { HomeComponent } from './Pages/home/home.component';
 
 @NgModule({
-  declarations: [AppComponent, HeaderComponent, PostsComponent],
+  declarations: [AppComponent, HeaderComponent, PostsComponent, HomeComponent],
   imports: [BrowserModule, AppRoutingModule, HttpClientModule],
   providers: [],
   bootstrap: [AppComponent],
