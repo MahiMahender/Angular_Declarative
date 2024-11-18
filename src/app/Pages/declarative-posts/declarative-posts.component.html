@@ -1,1 +1,23 @@
-<p>declarative-posts works!</p>
+<div class="row">
+  <div class="col-12">
+    <h3>Post Data</h3>
+    <table class="table" *ngIf="posts$ | async as postData">
+      <thead>
+        <tr>
+          <th>Id</th>
+          <th>Title</th>
+          <th>Description</th>
+          <th>Category</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let post of postData">
+          <td>{{ post.id }}</td>
+          <td>{{ post.title }}</td>
+          <td>{{ post.description }}</td>
+          <td>{{ post.categoryName }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

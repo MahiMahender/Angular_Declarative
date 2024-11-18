@@ -1,15 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { DeclarativePostsService } from 'src/app/Services/declarative-posts.service';
 
 @Component({
   selector: 'app-declarative-posts',
   templateUrl: './declarative-posts.component.html',
-  styleUrls: ['./declarative-posts.component.css']
+  styleUrls: ['./declarative-posts.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DeclarativePostsComponent implements OnInit {
-
-  constructor() { }
-
-  ngOnInit(): void {
-  }
-
+  posts$ = this.postsService.posts$;
+  constructor(private postsService: DeclarativePostsService) {}
+  ngOnInit(): void {}
 }
