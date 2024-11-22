@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { Subject, forkJoin } from 'rxjs';
 import { DeclarativePostsService } from 'src/app/Services/declarative-posts.service';
 
 @Component({
