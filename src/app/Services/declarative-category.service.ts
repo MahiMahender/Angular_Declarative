@@ -7,5 +7,18 @@ import { ICategory } from '../Models/ICategory';
   providedIn: 'root',
 })
 export class DeclarativeCategoryService {
+  categories$ = this.http
+    .get<{ [id: string]: ICategory }>(
+      'https://angular-rxjs-declarative-posts-default-rtdb.firebaseio.com/Categories.json'
+    )
+    .pipe(
+      map((categoriesData) => {
+        let categories: ICategory[] = [];
+        for (let id in categoriesData) {
+          categories.push({ ...categoriesData[id], id });
+        }
+        return categories;
+      })
+    );
   constructor(private http: HttpClient) {}
 }

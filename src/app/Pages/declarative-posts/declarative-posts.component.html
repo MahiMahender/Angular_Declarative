@@ -1,7 +1,7 @@
 <div class="row">
   <div class="col-12">
     <h3>Post Data</h3>
-    <table class="table" *ngIf="posts$ | async as postData">
+    <table class="table" *ngIf="postsWithCategory$ | async as postData">
       <thead>
         <tr>
           <th>Id</th>
