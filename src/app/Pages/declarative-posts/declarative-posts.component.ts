@@ -14,6 +14,14 @@ export class DeclarativePostsComponent implements OnInit {
   posts$ = this.postsService.posts$;
   postsWithCategory$ = this.postsService.postsWithCategory$;
 
+  selctedCategoryId = 'Id_1';
+
+  filteredPostsUsingCategoryId$ = this.postsWithCategory$.pipe(
+    map((posts) => {
+      return posts.filter((post) => post.categoryid == this.selctedCategoryId);
+    })
+  );
+
   constructor(private postsService: DeclarativePostsService) {}
   ngOnInit(): void {}
 }
