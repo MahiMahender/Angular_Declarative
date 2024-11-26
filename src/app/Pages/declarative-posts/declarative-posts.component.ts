@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { Subject, combineLatest, forkJoin, map } from 'rxjs';
+import { map } from 'rxjs/operators';
+
 import { IPost } from 'src/app/Models/IPost';
 import { DeclarativeCategoryService } from 'src/app/Services/declarative-category.service';
 import { DeclarativePostsService } from 'src/app/Services/declarative-posts.service';
@@ -14,11 +15,11 @@ export class DeclarativePostsComponent implements OnInit {
   posts$ = this.postsService.posts$;
   postsWithCategory$ = this.postsService.postsWithCategory$;
 
-  selctedCategoryId = 'Id_1';
+  selctedCategoryId = 'IT_1';
 
   filteredPostsUsingCategoryId$ = this.postsWithCategory$.pipe(
     map((posts) => {
-      return posts.filter((post) => post.categoryid == this.selctedCategoryId);
+      return posts.filter((post) => post.categoryid === this.selctedCategoryId);
     })
   );
 
