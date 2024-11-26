@@ -13,16 +13,28 @@ import { DeclarativePostsService } from 'src/app/Services/declarative-posts.serv
 })
 export class DeclarativePostsComponent implements OnInit {
   posts$ = this.postsService.posts$;
+  categories$ = this.categories.categories$;
   postsWithCategory$ = this.postsService.postsWithCategory$;
 
-  selctedCategoryId = 'IT_1';
-
+  selctedCategoryId = '';
   filteredPostsUsingCategoryId$ = this.postsWithCategory$.pipe(
     map((posts) => {
-      return posts.filter((post) => post.categoryid === this.selctedCategoryId);
+      return posts.filter((post) =>
+        this.selctedCategoryId
+          ? post.categoryid === this.selctedCategoryId
+          : true
+      );
     })
   );
 
-  constructor(private postsService: DeclarativePostsService) {}
+  constructor(
+    private postsService: DeclarativePostsService,
+    private categories: DeclarativeCategoryService
+  ) {}
   ngOnInit(): void {}
+
+  onCategoryChange(event: Event) {
+    let selectedId = (event.target as HTMLSelectElement).value;
+    this.selctedCategoryId = selectedId;
+  }
 }
