@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { combineLatest, Subject } from 'rxjs';
+import { BehaviorSubject, combineLatest, Subject } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { IPost } from 'src/app/Models/IPost';
@@ -13,7 +13,7 @@ import { DeclarativePostsService } from 'src/app/Services/declarative-posts.serv
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DeclarativePostsComponent implements OnInit {
-  selectedCategorySubject = new Subject<string>();
+  selectedCategorySubject = new BehaviorSubject<string>('');
   selectedCategoryAction$ = this.selectedCategorySubject.asObservable();
 
   posts$ = this.postsService.posts$;
@@ -27,8 +27,10 @@ export class DeclarativePostsComponent implements OnInit {
     this.selectedCategoryAction$,
   ]).pipe(
     map(([postsWithCategory, selectedCategoryAction]) => {
-      return postsWithCategory.filter(
-        (post) => post.categoryid == selectedCategoryAction
+      return postsWithCategory.filter((post) =>
+        selectedCategoryAction
+          ? post.categoryid == selectedCategoryAction
+          : true
       );
     })
   );
