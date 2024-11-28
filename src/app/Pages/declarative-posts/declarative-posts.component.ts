@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { Subject } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { IPost } from 'src/app/Models/IPost';
@@ -12,8 +13,11 @@ import { DeclarativePostsService } from 'src/app/Services/declarative-posts.serv
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DeclarativePostsComponent implements OnInit {
+  selectedCategorySubject = new Subject<string>();
+  selectedCategoryAction$ = this.selectedCategorySubject.asObservable();
+
   posts$ = this.postsService.posts$;
-  categories$ = this.categories.categories$;
+  categories$ = this.categoriesService.categories$;
   postsWithCategory$ = this.postsService.postsWithCategory$;
 
   selctedCategoryId = '';
@@ -29,12 +33,12 @@ export class DeclarativePostsComponent implements OnInit {
 
   constructor(
     private postsService: DeclarativePostsService,
-    private categories: DeclarativeCategoryService
+    private categoriesService: DeclarativeCategoryService
   ) {}
   ngOnInit(): void {}
 
   onCategoryChange(event: Event) {
     let selectedId = (event.target as HTMLSelectElement).value;
-    this.selctedCategoryId = selectedId;
+    this.selectedCategorySubject.next(selectedId);
   }
 }
