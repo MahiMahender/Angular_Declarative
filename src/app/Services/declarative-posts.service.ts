@@ -43,7 +43,7 @@ export class DeclarativePostsService {
     })
   );
 
-  selectedPostSubject = new Subject<string>();
+  private selectedPostSubject = new Subject<string>();
   selectedPostAction$ = this.selectedPostSubject.asObservable();
 
   selectedPostId(postId: string) {
@@ -55,7 +55,7 @@ export class DeclarativePostsService {
     this.selectedPostAction$,
   ]).pipe(
     map(([posts, selectedPostId]) => {
-      return posts.filter((post) => post.id == selectedPostId);
+      return posts.find((post) => post.id == selectedPostId);
     })
   );
 }

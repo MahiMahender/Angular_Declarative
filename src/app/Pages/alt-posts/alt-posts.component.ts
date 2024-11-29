@@ -16,7 +16,6 @@ export class AltPostsComponent implements OnInit {
 
   onPostSelect(post: IPost, event: Event) {
     event.preventDefault();
-    console.log(post);
     post.id && this.postsService.selectedPostId(post.id);
   }
 }

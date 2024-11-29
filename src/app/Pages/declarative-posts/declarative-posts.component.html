@@ -6,10 +6,10 @@
         <select class="form-select" (change)="onCategoryChange($event)">
           <option value="">select cateory</option>
           <option
-            [value]="cateory.id"
-            *ngFor="let cateory of categories$ | async"
+            [value]="category.id"
+            *ngFor="let category of categories$ | async"
           >
-            {{ cateory.title }}
+            {{ category.title }}
           </option>
         </select>
       </div>
