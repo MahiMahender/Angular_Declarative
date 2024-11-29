@@ -8,9 +8,11 @@ import { HeaderComponent } from './Components/header/header.component';
 import { PostsComponent } from './Pages/posts/posts.component';
 import { HomeComponent } from './Pages/home/home.component';
 import { DeclarativePostsComponent } from './Pages/declarative-posts/declarative-posts.component';
+import { AltPostsComponent } from './Pages/alt-posts/alt-posts.component';
+import { SinglePostComponent } from './Components/single-post/single-post.component';
 
 @NgModule({
-  declarations: [AppComponent, HeaderComponent, PostsComponent, HomeComponent, DeclarativePostsComponent],
+  declarations: [AppComponent, HeaderComponent, PostsComponent, HomeComponent, DeclarativePostsComponent, AltPostsComponent, SinglePostComponent],
   imports: [BrowserModule, AppRoutingModule, HttpClientModule],
   providers: [],
   bootstrap: [AppComponent],
