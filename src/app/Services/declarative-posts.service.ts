@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { delay, exhaustMap, map } from 'rxjs/operators';
+import { catchError, delay, exhaustMap, map } from 'rxjs/operators';
 import { IPost } from '../Models/IPost';
-import { combineLatest, forkJoin, of, Subject } from 'rxjs';
+import { combineLatest, forkJoin, of, Subject, throwError } from 'rxjs';
 import { DeclarativeCategoryService } from './declarative-category.service';
 
 @Injectable({
@@ -25,7 +25,8 @@ export class DeclarativePostsService {
           post.push({ ...postData[id], id });
         }
         return post;
-      })
+      }),
+      catchError(this.handleError)
     );
   postsWithCategory$ = forkJoin([
     this.posts$,
@@ -40,7 +41,8 @@ export class DeclarativePostsService {
           )?.title,
         } as IPost;
       });
-    })
+    }),
+    catchError(this.handleError)
   );
 
   private selectedPostSubject = new Subject<string>();
@@ -56,6 +58,12 @@ export class DeclarativePostsService {
   ]).pipe(
     map(([posts, selectedPostId]) => {
       return posts.find((post) => post.id == selectedPostId);
-    })
+    }),
+    catchError(this.handleError)
   );
+  handleError(error: Error) {
+    return throwError(() => {
+      return 'Unknow erroe occured.please try again';
+    });
+  }
 }
