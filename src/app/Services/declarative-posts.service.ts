@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { delay, exhaustMap, map } from 'rxjs/operators';
 import { IPost } from '../Models/IPost';
-import { combineLatest, forkJoin, of } from 'rxjs';
+import { combineLatest, forkJoin, of, Subject } from 'rxjs';
 import { DeclarativeCategoryService } from './declarative-category.service';
 
 @Injectable({
@@ -40,6 +40,22 @@ export class DeclarativePostsService {
           )?.title,
         } as IPost;
       });
+    })
+  );
+
+  selectedPostSubject = new Subject<string>();
+  selectedPostAction$ = this.selectedPostSubject.asObservable();
+
+  selectedPostId(postId: string) {
+    this.selectedPostSubject.next(postId);
+  }
+
+  post$ = combineLatest([
+    this.postsWithCategory$,
+    this.selectedPostAction$,
+  ]).pipe(
+    map(([posts, selectedPostId]) => {
+      return posts.filter((post) => post.id == selectedPostId);
     })
   );
 }
