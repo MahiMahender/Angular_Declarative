@@ -63,7 +63,7 @@ export class DeclarativePostsService {
   );
   handleError(error: Error) {
     return throwError(() => {
-      return 'Unknow erroe occured.please try again';
+      return 'Unknow error occured.please try again';
     });
   }
 }

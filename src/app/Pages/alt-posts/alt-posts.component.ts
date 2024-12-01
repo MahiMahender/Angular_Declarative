@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { BehaviorSubject, catchError, EMPTY } from 'rxjs';
 import { IPost } from 'src/app/Models/IPost';
 import { DeclarativePostsService } from 'src/app/Services/declarative-posts.service';
 
@@ -9,7 +10,15 @@ import { DeclarativePostsService } from 'src/app/Services/declarative-posts.serv
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AltPostsComponent implements OnInit {
-  posts$ = this.postsService.postsWithCategory$;
+  errorMessageSubject = new BehaviorSubject<string>('');
+  errorMessageAction$ = this.errorMessageSubject.asObservable();
+  errorMessage = '';
+  posts$ = this.postsService.postsWithCategory$.pipe(
+    catchError((error) => {
+      this.errorMessageSubject.next(error);
+      return EMPTY;
+    })
+  );
   constructor(private postsService: DeclarativePostsService) {}
 
   ngOnInit(): void {}
