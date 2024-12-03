@@ -12,7 +12,7 @@ import { DeclarativePostsService } from 'src/app/Services/declarative-posts.serv
 export class AltPostsComponent implements OnInit {
   errorMessageSubject = new BehaviorSubject<string>('');
   errorMessageAction$ = this.errorMessageSubject.asObservable();
-  errorMessage = '';
+
   posts$ = this.postsService.postsWithCategory$.pipe(
     catchError((error) => {
       this.errorMessageSubject.next(error);
