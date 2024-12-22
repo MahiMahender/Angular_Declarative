@@ -13,6 +13,8 @@ export class AltPostsComponent implements OnInit {
   errorMessageSubject = new BehaviorSubject<string>('');
   errorMessageAction$ = this.errorMessageSubject.asObservable();
 
+  selectedPost$ = this.postsService.post$;
+
   posts$ = this.postsService.postsWithCategory$.pipe(
     catchError((error) => {
       this.errorMessageSubject.next(error);

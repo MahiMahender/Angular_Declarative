@@ -1,6 +1,13 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { catchError, delay, exhaustMap, map } from 'rxjs/operators';
+import {
+  catchError,
+  delay,
+  exhaustMap,
+  map,
+  share,
+  shareReplay,
+} from 'rxjs/operators';
 import { IPost } from '../Models/IPost';
 import { combineLatest, forkJoin, of, Subject, throwError } from 'rxjs';
 import { DeclarativeCategoryService } from './declarative-category.service';
@@ -26,7 +33,8 @@ export class DeclarativePostsService {
         }
         return post;
       }),
-      catchError(this.handleError)
+      catchError(this.handleError),
+      share()
     );
   postsWithCategory$ = forkJoin([
     this.posts$,
