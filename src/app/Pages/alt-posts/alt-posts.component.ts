@@ -1,5 +1,12 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { BehaviorSubject, catchError, combineLatest, EMPTY, tap } from 'rxjs';
+import {
+  BehaviorSubject,
+  catchError,
+  combineLatest,
+  EMPTY,
+  map,
+  tap,
+} from 'rxjs';
 import { IPost } from 'src/app/Models/IPost';
 import { DeclarativePostsService } from 'src/app/Services/declarative-posts.service';
 
@@ -9,7 +16,7 @@ import { DeclarativePostsService } from 'src/app/Services/declarative-posts.serv
   styleUrls: ['./alt-posts.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AltPostsComponent implements OnInit {
+export class AltPostsComponent {
   constructor(private postsService: DeclarativePostsService) {}
   errorMessageSubject = new BehaviorSubject<string>('');
   errorMessageAction$ = this.errorMessageSubject.asObservable();
@@ -30,7 +37,11 @@ export class AltPostsComponent implements OnInit {
     })
   );
 
-  ngOnInit(): void {}
+  vm$ = combineLatest([this.posts$, this.selectedPost$]).pipe(
+    map(([posts, selectedPost]) => {
+      return { posts, selectedPost };
+    })
+  );
 
   onPostSelect(post: IPost, event: Event) {
     event.preventDefault();
