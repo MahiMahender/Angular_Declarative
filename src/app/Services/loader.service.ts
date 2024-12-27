@@ -12,10 +12,8 @@ export class LoaderService {
 
   showLoader() {
     this.loadingSubject.next(true);
-    console.log('true');
   }
   hideLoader() {
     this.loadingSubject.next(false);
-    console.log('false');
   }
 }

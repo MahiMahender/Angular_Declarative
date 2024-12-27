@@ -27,7 +27,6 @@ export class DeclarativePostsService implements OnInit {
   }
   ngOnInit(): void {
     this.loader.showLoader();
-    console.log('ngOnInit');
   }
 
   posts$ = this.http
@@ -35,7 +34,6 @@ export class DeclarativePostsService implements OnInit {
       'https://angular-rxjs-declarative-posts-default-rtdb.firebaseio.com/posts.json'
     )
     .pipe(
-      delay(2000),
       tap((data) => {
         this.loader.hideLoader();
       }),
