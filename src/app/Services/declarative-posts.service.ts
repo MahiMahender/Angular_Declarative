@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, OnInit } from '@angular/core';
 import {
   catchError,
   delay,
@@ -7,25 +7,38 @@ import {
   map,
   share,
   shareReplay,
+  tap,
 } from 'rxjs/operators';
 import { IPost } from '../Models/IPost';
 import { combineLatest, forkJoin, of, Subject, throwError } from 'rxjs';
 import { DeclarativeCategoryService } from './declarative-category.service';
+import { LoaderService } from './loader.service';
 
 @Injectable({
   providedIn: 'root',
 })
-export class DeclarativePostsService {
+export class DeclarativePostsService implements OnInit {
   constructor(
     private http: HttpClient,
-    private categories: DeclarativeCategoryService
-  ) {}
+    private categories: DeclarativeCategoryService,
+    private loader: LoaderService
+  ) {
+    this.loader.showLoader();
+  }
+  ngOnInit(): void {
+    this.loader.showLoader();
+    console.log('ngOnInit');
+  }
 
   posts$ = this.http
     .get<{ [id: string]: IPost }>(
       'https://angular-rxjs-declarative-posts-default-rtdb.firebaseio.com/posts.json'
     )
     .pipe(
+      delay(2000),
+      tap((data) => {
+        this.loader.hideLoader();
+      }),
       map((postData) => {
         let post: IPost[] = [];
         for (let id in postData) {
