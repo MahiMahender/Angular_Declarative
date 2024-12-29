@@ -8,7 +8,9 @@
     <h3>Post Data</h3>
   </div>
   <div class="col-6 text-end">
-    <button #add type="submit" class="btn btn-primary">Add Post</button>
+    <button #add (click)="onAddPost()" type="submit" class="btn btn-primary">
+      Add Post
+    </button>
   </div>
   <div class="row">
     <div class="col-4">
@@ -25,7 +27,8 @@
       </div>
     </div>
     <div class="col-8">
-      <app-single-post></app-single-post>
+      <app-single-post *ngIf="!showAddPost"></app-single-post>
+      <app-add-post *ngIf="showAddPost"></app-add-post>
     </div>
   </div>
 </div>

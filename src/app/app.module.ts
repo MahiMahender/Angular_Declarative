@@ -11,9 +11,10 @@ import { DeclarativePostsComponent } from './Pages/declarative-posts/declarative
 import { AltPostsComponent } from './Pages/alt-posts/alt-posts.component';
 import { SinglePostComponent } from './Components/single-post/single-post.component';
 import { LoadingComponent } from './Components/loading/loading.component';
+import { AddPostComponent } from './Components/add-post/add-post.component';
 
 @NgModule({
-  declarations: [AppComponent, HeaderComponent, PostsComponent, HomeComponent, DeclarativePostsComponent, AltPostsComponent, SinglePostComponent, LoadingComponent],
+  declarations: [AppComponent, HeaderComponent, PostsComponent, HomeComponent, DeclarativePostsComponent, AltPostsComponent, SinglePostComponent, LoadingComponent, AddPostComponent],
   imports: [BrowserModule, AppRoutingModule, HttpClientModule],
   providers: [],
   bootstrap: [AppComponent],

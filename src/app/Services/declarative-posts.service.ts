@@ -10,7 +10,14 @@ import {
   tap,
 } from 'rxjs/operators';
 import { IPost } from '../Models/IPost';
-import { combineLatest, forkJoin, of, Subject, throwError } from 'rxjs';
+import {
+  BehaviorSubject,
+  combineLatest,
+  forkJoin,
+  of,
+  Subject,
+  throwError,
+} from 'rxjs';
 import { DeclarativeCategoryService } from './declarative-category.service';
 import { LoaderService } from './loader.service';
 
@@ -64,7 +71,7 @@ export class DeclarativePostsService implements OnInit {
     catchError(this.handleError)
   );
 
-  private selectedPostSubject = new Subject<string>();
+  private selectedPostSubject = new BehaviorSubject<string>('');
   selectedPostAction$ = this.selectedPostSubject.asObservable();
 
   selectedPostId(postId: string) {
