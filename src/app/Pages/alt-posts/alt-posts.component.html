@@ -4,25 +4,28 @@
   </div>
 </div>
 <div class="row">
-  <div class="col-12">
+  <div class="col-4">
     <h3>Post Data</h3>
-    <div class="row">
-      <div class="col-4">
-        <div class="list-group" *ngIf="vm$ | async as vm">
-          <a
-            (click)="onPostSelect(post, $event)"
-            href="#"
-            [class]="{ active: post.id == vm.selectedPost?.id }"
-            class="list-group-item list-group-item-action"
-            *ngFor="let post of vm.posts"
-          >
-            {{ post.title }} - {{ post.categoryName }}
-          </a>
-        </div>
+  </div>
+  <div class="col-6 text-end">
+    <button #add type="submit" class="btn btn-primary">Add Post</button>
+  </div>
+  <div class="row">
+    <div class="col-4">
+      <div class="list-group" *ngIf="vm$ | async as vm">
+        <a
+          (click)="onPostSelect(post, $event)"
+          href="#"
+          [class]="{ active: post.id == vm.selectedPost?.id }"
+          class="list-group-item list-group-item-action"
+          *ngFor="let post of vm.posts"
+        >
+          {{ post.title }} - {{ post.categoryName }}
+        </a>
       </div>
-      <div class="col-8">
-        <app-single-post></app-single-post>
-      </div>
+    </div>
+    <div class="col-8">
+      <app-single-post></app-single-post>
     </div>
   </div>
 </div>
