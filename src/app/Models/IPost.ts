@@ -7,6 +7,6 @@ export interface IPost {
 }
 
 export interface CRUDAction<T> {
-  action: 'Add ' | 'Update' | 'Delete';
-  Data: T;
+  action: 'Add' | 'Update' | 'Delete';
+  data: T;
 }

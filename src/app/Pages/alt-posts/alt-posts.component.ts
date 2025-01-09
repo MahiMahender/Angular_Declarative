@@ -28,7 +28,17 @@ export class AltPostsComponent {
     })
   );
 
-  posts$ = this.postsService.postsWithCategory$.pipe(
+  // posts$ = this.postsService.postsWithCategory$.pipe(
+  //   tap((posts) => {
+  //     posts[0].id && this.postsService.selectedPostId(posts[0].id);
+  //   }),
+  //   catchError((error) => {
+  //     this.errorMessageSubject.next(error);
+  //     return EMPTY;
+  //   })
+  // );
+
+  posts$ = this.postsService.allPosts$.pipe(
     tap((posts) => {
       posts[0].id && this.postsService.selectedPostId(posts[0].id);
     }),

@@ -5,6 +5,7 @@ import {
   delay,
   exhaustMap,
   map,
+  scan,
   share,
   shareReplay,
   tap,
@@ -14,6 +15,7 @@ import {
   BehaviorSubject,
   combineLatest,
   forkJoin,
+  merge,
   of,
   Subject,
   throwError,
@@ -89,7 +91,24 @@ export class DeclarativePostsService implements OnInit {
   );
 
   private postCRUDSubject = new Subject<CRUDAction<IPost>>();
-  postCRUDAction = this.postCRUDSubject.asObservable();
+  postCRUDAction$ = this.postCRUDSubject.asObservable();
+
+  addPost(post: IPost) {
+    this.postCRUDSubject.next({ action: 'Add', data: post });
+  }
+
+  allPosts$ = merge(
+    this.postsWithCategory$,
+    this.postCRUDAction$.pipe(
+      map((data) => {
+        return [data.data];
+      })
+    )
+  ).pipe(
+    scan((posts, value) => {
+      return [...posts, ...value];
+    })
+  );
 
   handleError(error: Error) {
     return throwError(() => {
