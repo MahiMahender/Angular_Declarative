@@ -9,7 +9,7 @@ import {
   shareReplay,
   tap,
 } from 'rxjs/operators';
-import { IPost } from '../Models/IPost';
+import { CRUDAction, IPost } from '../Models/IPost';
 import {
   BehaviorSubject,
   combineLatest,
@@ -87,6 +87,10 @@ export class DeclarativePostsService implements OnInit {
     }),
     catchError(this.handleError)
   );
+
+  private postCRUDSubject = new Subject<CRUDAction<IPost>>();
+  postCRUDAction = this.postCRUDSubject.asObservable();
+
   handleError(error: Error) {
     return throwError(() => {
       return 'Unknow error occured.please try again';

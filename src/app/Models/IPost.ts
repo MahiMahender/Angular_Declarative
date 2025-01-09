@@ -5,3 +5,8 @@ export interface IPost {
   title: string;
   categoryName?: string;
 }
+
+export interface CRUDAction<T> {
+  action: 'Add ' | 'Update' | 'Delete';
+  Data: T;
+}
