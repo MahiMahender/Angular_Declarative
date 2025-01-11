@@ -100,15 +100,15 @@ export class DeclarativePostsService implements OnInit {
   allPosts$ = merge(
     this.postsWithCategory$,
     this.postCRUDAction$.pipe(
-      map((data) => {
-        return [data.data];
-      })
+      map((postAction) => this.savePostData(postAction))
     )
   ).pipe(
     scan((posts, value) => {
-      return [...posts, ...value];
+      //return [...posts, ...value];
     })
   );
+
+  savePostData(postAction: CRUDAction<IPost>) {}
 
   handleError(error: Error) {
     return throwError(() => {
