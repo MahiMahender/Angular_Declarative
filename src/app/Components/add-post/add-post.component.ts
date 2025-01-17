@@ -27,6 +27,6 @@ export class AddPostComponent implements OnInit {
   });
 
   onAddPost() {
-    this.postService.addPost(this.addPostForm.value as IPost);
+    this.postService.addPost(<IPost>this.addPostForm.value);
   }
 }

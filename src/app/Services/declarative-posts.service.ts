@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable, OnInit } from '@angular/core';
 import {
   catchError,
+  concatMap,
   delay,
   exhaustMap,
   map,
@@ -14,6 +15,7 @@ import { CRUDAction, IPost } from '../Models/IPost';
 import {
   BehaviorSubject,
   combineLatest,
+  EMPTY,
   forkJoin,
   merge,
   of,
@@ -100,15 +102,38 @@ export class DeclarativePostsService implements OnInit {
   allPosts$ = merge(
     this.postsWithCategory$,
     this.postCRUDAction$.pipe(
-      map((postAction) => this.savePostData(postAction))
+      map((postAction) => this.savePostData(postAction)),
+      tap((data) => {
+        console.log('data :' + data);
+      })
     )
   ).pipe(
     scan((posts, value) => {
-      //return [...posts, ...value];
-    })
+      return [...(posts as IPost[]), ...(value as [])];
+    }, [] as IPost[])
   );
 
-  savePostData(postAction: CRUDAction<IPost>) {}
+  savePostData(postAction: CRUDAction<IPost>) {
+    if (postAction.action == 'Add') {
+      return this.addPostDataToServer(postAction.data);
+    }
+    return of(postAction.data);
+  }
+  addPostDataToServer(selectedPost: IPost) {
+    return this.http
+      .post<{ id: string }>(
+        'https://angular-rxjs-declarative-posts-default-rtdb.firebaseio.com/posts.json',
+        selectedPost
+      )
+      .pipe(
+        map((res) => {
+          return {
+            ...selectedPost,
+            id: res,
+          };
+        })
+      );
+  }
 
   handleError(error: Error) {
     return throwError(() => {
